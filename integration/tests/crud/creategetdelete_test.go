@@ -1,5 +1,5 @@
-//go:build integration
-// +build integration
+//// go:build integration
+//// +build integration
 
 package crud
 
@@ -109,6 +109,7 @@ var _ = BeforeSuite(func() {
 
 var _ = Describe("(Integration) Create, Get, Scale & Delete", func() {
 	commonTimeout := 10 * time.Minute
+	nodegroupTimeout := 1 * time.Hour
 	makeClusterConfig := func() *api.ClusterConfig {
 		clusterConfig := api.NewClusterConfig()
 		clusterConfig.Metadata.Name = params.ClusterName
@@ -376,7 +377,7 @@ var _ = Describe("(Integration) Create, Get, Scale & Delete", func() {
 				// create a new subnet in that given vpc and zone.
 				cmd := params.EksctlCreateCmd.WithArgs(
 					"nodegroup",
-					"--timeout=45m",
+					"--timeout", nodegroupTimeout,
 					"--cluster", params.ClusterName,
 					"--nodes", "1",
 					"--node-type", "p2.xlarge",
@@ -428,7 +429,7 @@ var _ = Describe("(Integration) Create, Get, Scale & Delete", func() {
 						"nodegroup",
 						"--config-file", "-",
 						"--verbose", "4",
-						"--timeout", "50m",
+						"--timeout", nodegroupTimeout,
 					).
 					WithoutArg("--region", params.Region).
 					WithStdin(clusterutils.Reader(clusterConfig))

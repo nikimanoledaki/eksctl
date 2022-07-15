@@ -1,5 +1,5 @@
-//go:build integration
-// +build integration
+////go:build integration
+//// +build integration
 
 package addons
 
@@ -88,39 +88,45 @@ var _ = Describe("(Integration) [EKS Addons test]", func() {
 
 		It("should support addons", func() {
 			By("Asserting the addon is listed in `get addons`")
-			cmd := params.EksctlGetCmd.
-				WithArgs(
-					"addons",
-					"--cluster", clusterName,
-					"--verbose", "2",
-				)
-			Expect(cmd).To(RunSuccessfullyWithOutputStringLines(
+			Eventually(func() string {
+				cmd := params.EksctlGetCmd.
+					WithArgs(
+						"addons",
+						"--cluster", clusterName,
+						"--verbose", "2",
+					)
+				return cmd
+			}, "5m", "30s").Should(RunSuccessfullyWithOutputStringLines(
 				ContainElement(ContainSubstring("vpc-cni")),
 				ContainElement(ContainSubstring("coredns")),
 			))
 
 			By("Asserting the addons are healthy")
-			cmd = params.EksctlGetCmd.
-				WithArgs(
-					"addon",
-					"--name", "vpc-cni",
-					"--cluster", clusterName,
-					"--verbose", "2",
-				)
-			Expect(cmd).To(RunSuccessfullyWithOutputStringLines(ContainElement(ContainSubstring("ACTIVE"))))
+			Eventually(func() string {
+				cmd := params.EksctlGetCmd.
+					WithArgs(
+						"addon",
+						"--name", "vpc-cni",
+						"--cluster", clusterName,
+						"--verbose", "2",
+					)
+				return cmd
+			}, "5m", "30s").Should(RunSuccessfullyWithOutputStringLines(ContainElement(ContainSubstring("ACTIVE"))))
 
-			cmd = params.EksctlGetCmd.
-				WithArgs(
-					"addon",
-					"--name", "coredns",
-					"--cluster", clusterName,
-					"--verbose", "2",
-				)
-			Expect(cmd).To(RunSuccessfullyWithOutputStringLines(ContainElement(ContainSubstring("ACTIVE"))))
+			Eventually(func() string {
+				cmd := params.EksctlGetCmd.
+					WithArgs(
+						"addon",
+						"--name", "coredns",
+						"--cluster", clusterName,
+						"--verbose", "2",
+					)
+				return cmd
+			}, "5m", "30s").Should(RunSuccessfullyWithOutputStringLines(ContainElement(ContainSubstring("ACTIVE"))))
 
 			By("successfully creating the kube-proxy addon")
 
-			cmd = params.EksctlCreateCmd.
+			cmd := params.EksctlCreateCmd.
 				WithArgs(
 					"addon",
 					"--name", "kube-proxy",
@@ -131,14 +137,16 @@ var _ = Describe("(Integration) [EKS Addons test]", func() {
 				)
 			Expect(cmd).To(RunSuccessfully())
 
-			cmd = params.EksctlGetCmd.
-				WithArgs(
-					"addon",
-					"--name", "kube-proxy",
-					"--cluster", clusterName,
-					"--verbose", "2",
-				)
-			Expect(cmd).To(RunSuccessfullyWithOutputStringLines(ContainElement(ContainSubstring("ACTIVE"))))
+			Eventually(func() string {
+				cmd := params.EksctlGetCmd.
+					WithArgs(
+						"addon",
+						"--name", "kube-proxy",
+						"--cluster", clusterName,
+						"--verbose", "2",
+					)
+				return cmd
+			}, "5m", "30s").Should(RunSuccessfullyWithOutputStringLines(ContainElement(ContainSubstring("ACTIVE"))))
 
 			By("Deleting the kube-proxy addon")
 			cmd = params.EksctlDeleteCmd.
