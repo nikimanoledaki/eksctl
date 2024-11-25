@@ -6,7 +6,7 @@ module github.com/weaveworks/eksctl
 go 1.18
 
 require (
-	github.com/Masterminds/semver/v3 v3.2.0
+	github.com/Masterminds/semver/v3 v3.3.1
 	github.com/aws/amazon-ec2-instance-selector/v2 v2.4.0
 	github.com/aws/aws-sdk-go v1.44.175
 	github.com/aws/aws-sdk-go-v2 v1.17.3
