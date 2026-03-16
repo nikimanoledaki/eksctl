@@ -3,7 +3,7 @@
 // you may also need to run `make push-build-image` depending on what has changed
 module github.com/weaveworks/eksctl
 
-go 1.18
+go 1.22
 
 require (
 	github.com/Masterminds/semver/v3 v3.2.0
@@ -87,7 +87,7 @@ require (
 	k8s.io/kubelet v0.25.2
 	k8s.io/utils v0.0.0-20220922104903-7796b5f52b7e
 	sigs.k8s.io/mdtoc v1.1.0
-	sigs.k8s.io/yaml v1.3.0
+	sigs.k8s.io/yaml v1.6.0
 )
 
 require (
@@ -490,6 +490,7 @@ require (
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
 	go.uber.org/zap v1.19.0 // indirect
+	go.yaml.in/yaml/v2 v2.4.2 // indirect
 	gocloud.dev v0.24.0 // indirect
 	golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e // indirect
 	golang.org/x/exp/typeparams v0.0.0-20220827204233-334a2380cb91 // indirect
