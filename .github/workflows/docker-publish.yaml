@@ -17,7 +17,7 @@ jobs:
         with:
           images: weaveworks/eksctl
       - name: Log in to Docker Hub
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        uses: docker/login-action@abd2ef45e78c5afb21d64d4ca52ee8550d9572c7
         with:
           username: weaveworkseksctlci
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
