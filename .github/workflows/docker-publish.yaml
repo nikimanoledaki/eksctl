@@ -22,7 +22,7 @@ jobs:
           username: weaveworkseksctlci
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Build and push Docker image
-        uses: docker/build-push-action@c56af957549030174b10d6867f20e78cfd7debc5 #3.2.0
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc #7.4.0
         with:
           context: .
           push: true
